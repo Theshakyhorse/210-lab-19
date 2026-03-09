@@ -34,8 +34,11 @@ void deleteL(Node *&);
 
 int main () {
     Node *head = nullptr;
+    Node *head1 = nullptr;
+    Node *head2 = nullptr;
     Node *newnode = nullptr;
     int choice = 0;
+    int counter = 0;
     vector<Movie> movies_v;
     ifstream fin ("input.txt");
     string t;
@@ -43,10 +46,17 @@ int main () {
     if (fin.good()){
         while (getline(fin, t)) {
             newnode = new Node;
-            fin >> newnode->rating;
-            fin.ignore();
+            for (int i = 0; i < NSIZE; i++) {
+                fin >> newnode->rating;
+                fin.ignore();
+                getline(fin, newnode->comment);
+                if (counter == 0){
+                    frontN(head, newnode);
+                }
+            }
             Movie temp;
             temp.setTitle(t);
+            movies_v.push_back(temp);
         }
     }
     else {cout << "Input file not found." << endl;}
