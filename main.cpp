@@ -38,6 +38,7 @@ public:
 
 int main () {
     srand(time(0));
+    //declarations
     Node *head = nullptr;
     Node *head1 = nullptr;
     Node *head2 = nullptr;
@@ -48,11 +49,12 @@ int main () {
     ifstream fin ("input.txt");
     string t;
 
+    //getting data from text file
     if (fin.good()){
         while (getline(fin, t)) {
             for (int i = 0; i < NSIZE; i++) {
                 newnode = new Node;
-                newnode->rating = (rand() % ((MX-MN+1)+MN)) / 10.0;
+                newnode->rating = (rand() % (MX-MN+1)+MN) / 10.0;
                 getline(fin, newnode->comment);
                 if (counter == 0) {frontN(head, newnode);}
                 if (counter == 1) {frontN(head1, newnode);}
@@ -71,7 +73,7 @@ int main () {
     }
     else {cout << "Input file not found." << endl;}
 
-    counter = 0;
+    //outputs data
     for (auto movie : movies_v) {
         movie.print();
     }
