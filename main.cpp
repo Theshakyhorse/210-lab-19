@@ -5,8 +5,8 @@
 #include <fstream>
 using namespace std;
 
-const int MN = 10, MX = 51;
-const int NSIZE = 3, MSIZE = 4;
+const int MN = 10, MX = 50;
+const int NSIZE = 3;
 
 struct Node {
     double rating;
@@ -18,11 +18,13 @@ class Movie{
 private:
 //private member variables
     string title;
-    Node reviews;
+    Node *reviews;
 public:
 //setters and getters
     string getTitle() {return title;}
     void setTitle(string t) {title = t;}
+    Node getReviews() {return *reviews;}
+    void setReviews(Node *r) {reviews=r;}
 
     void print() {
         cout << "Movie: " << title << endl;
@@ -38,6 +40,7 @@ int main () {
     Node *head = nullptr;
     Node *head1 = nullptr;
     Node *head2 = nullptr;
+    Node *head3 = nullptr;
     Node *newnode = nullptr;
     int choice = 0;
     int counter = 0;
@@ -47,21 +50,25 @@ int main () {
 
     if (fin.good()){
         while (getline(fin, t)) {
-            newnode = new Node;
             for (int i = 0; i < NSIZE; i++) {
-                newnode->rating = (rand() % 51) / 10.0;
+                newnode = new Node;
+                newnode->rating = (rand() % ((MX-MN+1)+MN)) / 10.0;
                 getline(fin, newnode->comment);
-                if (counter == 0){
-                    frontN(head, newnode);
-                }
+                if (counter == 0) {frontN(head, newnode);}
+                if (counter == 1) {frontN(head1, newnode);}
+                if (counter == 2) {frontN(head2, newnode);}
+                if (counter == 3) {frontN(head3, newnode);}
             }
             Movie temp;
             temp.setTitle(t);
+            if (counter == 0) {temp.setReviews(head);}
             movies_v.push_back(temp);
+            counter++;
         }
     }
     else {cout << "Input file not found." << endl;}
 
+    counter = 0;
     for (auto movie : movies_v) {
         movie.print();
     }
