@@ -36,6 +36,20 @@ int main () {
     Node *head = nullptr;
     Node *newnode = nullptr;
     int choice = 0;
+    vector<Movie> movies_v;
+    ifstream fin ("input.txt");
+    string t;
+
+    if (fin.good()){
+        while (getline(fin, t)) {
+            newnode = new Node;
+            fin >> newnode->rating;
+            fin.ignore();
+            Movie temp;
+            temp.setTitle(t);
+        }
+    }
+    else {cout << "Input file not found." << endl;}
 
     for (int i = 0; i < NSIZE; i++) {
         newnode = new Node;
@@ -47,4 +61,46 @@ int main () {
         frontN(head, newnode);
     }
     return 0;
+}
+
+//adds node to head
+void frontN(Node *&head, Node *newnode) {
+    if(!head) {
+        head = newnode;
+        newnode->next=nullptr;
+    }
+    else {
+        newnode->next=head;
+        head = newnode;
+    }
+}
+
+//outputs linked list
+void output(Node *hd) {
+    if (!hd) {
+        cout << "empty list.\n";
+        return;
+    }
+
+    int count = 1;
+    double sum = 0;
+    Node *current = hd;
+    while (current) {
+        cout << " > Review #" << count++ << ": ";
+        cout << current->rating << ": " << current ->comment << endl;
+        sum += current->rating;
+        current = current->next;
+    }
+    cout << " > Average: " << sum/(count-1) << endl;
+}
+
+//deletes linked list
+void deleteL(Node *&n) {
+    Node *current = n;
+    while (current) {
+        n = current ->next;
+        delete current;
+        current = n;
+    }
+    n = nullptr;
 }
