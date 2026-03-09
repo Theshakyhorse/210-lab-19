@@ -5,6 +5,7 @@
 #include <fstream>
 using namespace std;
 
+const int MN = 10, MX = 51;
 const int NSIZE = 3, MSIZE = 4;
 
 struct Node {
@@ -33,6 +34,7 @@ void output(Node *);
 void deleteL(Node *&);
 
 int main () {
+    srand(time(0));
     Node *head = nullptr;
     Node *head1 = nullptr;
     Node *head2 = nullptr;
@@ -47,8 +49,7 @@ int main () {
         while (getline(fin, t)) {
             newnode = new Node;
             for (int i = 0; i < NSIZE; i++) {
-                fin >> newnode->rating;
-                fin.ignore();
+                newnode->rating = (rand() % 51) / 10.0;
                 getline(fin, newnode->comment);
                 if (counter == 0){
                     frontN(head, newnode);
@@ -60,6 +61,10 @@ int main () {
         }
     }
     else {cout << "Input file not found." << endl;}
+
+    for (auto movie : movies_v) {
+        movie.print();
+    }
 
     for (int i = 0; i < NSIZE; i++) {
         newnode = new Node;
