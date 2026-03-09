@@ -14,6 +14,10 @@ struct Node {
     Node *next;
 };
 
+void frontN(Node *&, Node *);
+void output(Node *);
+void deleteL(Node *&);
+
 class Movie{
 private:
 //private member variables
@@ -28,12 +32,9 @@ public:
 
     void print() {
         cout << "Movie: " << title << endl;
+        output(reviews);
     }
 };
-
-void frontN(Node *&, Node *);
-void output(Node *);
-void deleteL(Node *&);
 
 int main () {
     srand(time(0));
@@ -42,7 +43,6 @@ int main () {
     Node *head2 = nullptr;
     Node *head3 = nullptr;
     Node *newnode = nullptr;
-    int choice = 0;
     int counter = 0;
     vector<Movie> movies_v;
     ifstream fin ("input.txt");
@@ -62,6 +62,9 @@ int main () {
             Movie temp;
             temp.setTitle(t);
             if (counter == 0) {temp.setReviews(head);}
+            if (counter == 1) {temp.setReviews(head1);}
+            if (counter == 2) {temp.setReviews(head2);}
+            if (counter == 3) {temp.setReviews(head3);}
             movies_v.push_back(temp);
             counter++;
         }
@@ -72,16 +75,11 @@ int main () {
     for (auto movie : movies_v) {
         movie.print();
     }
+    deleteL(head);
+    deleteL(head1);
+    deleteL(head2);
+    deleteL(head3);
 
-    for (int i = 0; i < NSIZE; i++) {
-        newnode = new Node;
-        cout << "Enter review rating 0.0-5.0:" << endl;
-        cin >> newnode->rating;
-        cout << "Enter review comment:" << endl;
-        cin.ignore();
-        getline(cin, newnode->comment);
-        frontN(head, newnode);
-    }
     return 0;
 }
 
